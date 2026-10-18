@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Slackwater: tide times for small boats</title>
+
+  <!-- Display font. styles.css falls back to the system font if it fails to load. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site-header">
+    <a class="logo" href="#">Slackwater</a>
+    <nav class="site-nav">
+      <a class="site-nav__link" href="#features">Features</a>
+      <a class="site-nav__link" href="#stories">Paddlers</a>
+      <a class="btn" href="#get">Get the app</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <div class="hero">
+      <div class="hero__top">
+        <div class="hero__text">
+          <h1 class="hero__title">Know the water before you’re on it.</h1>
+          <p class="hero__lead">Slackwater turns tide tables into one clear answer: is it safe to launch, and for how long. Built for kayakers, paddleboarders and dinghy sailors.</p>
+          <div>
+            <a class="btn" href="#get">Get the app</a>
+            <a class="btn btn--ghost" href="#features">See how it works</a>
+          </div>
+        </div>
+        <figure class="hero__image">
+          <img src="images/hero-paddleboarder.jpg" alt="Paddleboarder gliding across calm water at sunrise">
+          <figcaption class="badge"><i class="badge__dot"></i>Window open: 2h 40m left</figcaption>
+        </figure>
+      </div>
+
+      <!-- Interactive tide chart: drawn and updated by script.js -->
+      <div class="tide" aria-label="Interactive tide chart for today">
+        <div class="tide__readout" aria-live="polite">
+          <strong class="tide__height" id="tide-height">1.9 m</strong>
+          <span class="tide__meta" id="tide-time">9:30 AM</span>
+          <span class="tide__meta" id="tide-trend">Rising</span>
+          <span class="tide__meta" id="tide-next">High at 6:07 PM</span>
+        </div>
+        <svg class="tide__chart" viewBox="0 0 800 240" role="img" aria-label="Tide height across 24 hours">
+          <path class="tide__area" id="tide-area"/>
+          <path class="tide__line" id="tide-line"/>
+          <line class="tide__cursor" id="tide-cursor" y1="0" y2="240"/>
+          <circle class="tide__dot" id="tide-dot" r="9"/>
+        </svg>
+        <input class="tide__slider" id="tide-slider" type="range" min="0" max="1439" value="570" aria-label="Time of day">
+        <p class="tide__hint">Drag the slider to scrub through the day. Illustrative data.</p>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <section class="section" id="features">
+      <h2 data-reveal>One number, not a table.</h2>
+      <div class="feature-grid">
+        <div class="card card--featured" data-reveal>
+          <div>
+            <h3>Your launch window, in minutes</h3>
+            <p>Pick your put-in and the draw of your boat. Slackwater shows how long the water stays deep enough to get out and back.</p>
+          </div>
+          <div class="stat" id="stat-window">2h 40m</div>
+        </div>
+        <div class="card" data-reveal>
+          <h3>Alerts for your slip</h3>
+          <p>Get a nudge two hours before the window opens, not a daily digest of numbers you have to decode.</p>
+        </div>
+        <div class="card" data-reveal>
+          <h3>Works offline</h3>
+          <p>Tides are calculated on your phone, so the chart is still there past the last bar of signal.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fleet gallery and banner -->
+    <section class="section" id="fleet">
+      <h2 data-reveal>Built for whatever floats.</h2>
+      <div class="fleet">
+        <figure class="fleet__item fleet__item--kayak" data-reveal>
+          <img loading="lazy" src="images/fleet-sea-kayaks.jpg" alt="Three kayakers paddling together on a calm river">
+          <figcaption><strong>Sea kayaks</strong>Deep-water exits, planned by the hour.</figcaption>
+        </figure>
+        <figure class="fleet__item fleet__item--canoe" data-reveal>
+          <img loading="lazy" src="images/fleet-sit-on-top.jpg" alt="Kayaker paddling a red and yellow kayak toward a beach">
+          <figcaption><strong>Sit-on-tops</strong>Beach landings at the right height.</figcaption>
+        </figure>
+        <figure class="fleet__item" data-reveal>
+          <img loading="lazy" src="images/fleet-day-sailer.jpg" alt="Sailboat crossing a river beneath forested hills">
+          <figcaption><strong>Day sailers</strong>Know when the channel is deep enough.</figcaption>
+        </figure>
+      </div>
+
+      <figure class="banner" data-reveal>
+        <img loading="lazy" src="images/banner-misty-lake.jpg" alt="">
+        <div class="banner__text">
+          <h2>The best hour to launch is the quietest one.</h2>
+          <p>Slack water is the still stretch when the tide stops moving. Slackwater tells you when it starts and how long it lasts.</p>
+        </div>
+        <svg class="wave" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 20Q75 0 150 20T300 20T450 20T600 20T750 20T900 20T1050 20T1200 20V40H0Z" fill="var(--bg)"/>
+        </svg>
+      </figure>
+    </section>
+
+    <!-- Testimonial -->
+    <section class="section" id="stories">
+      <blockquote class="quote" data-reveal>
+        <cite>Maya R., sea kayak guide</cite>
+        <p>I used to carry three printed tables. Now I check one screen at the car park and we’re on the water.</p>
+      </blockquote>
+    </section>
+
+    <!-- Call to action -->
+    <div class="cta" id="get" data-reveal>
+      <h2>Free for your home harbour.</h2>
+      <a class="btn" href="#">Download for iOS</a>
+      <a class="btn btn--ghost" href="#">Download for Android</a>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <span>© 2026 Slackwater. A portfolio concept by Your Name.</span>
+    <span>Tide data is illustrative.</span>
+  </footer>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>

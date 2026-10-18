@@ -1,0 +1,380 @@
+/* ==========================================================================
+   Slackwater landing page
+   1. Tokens        4. Hero
+   2. Base          5. Sections (features, fleet, banner, quote, CTA)
+   3. Shared parts  6. Motion
+                    7. Responsive
+   ========================================================================== */
+
+/* 1. Tokens ---------------------------------------------------------------- */
+:root {
+  /* Colour (light theme) */
+  --bg: #E3EEEC;
+  --surface: #F6FBFA;
+  --ink: #0D2B36;
+  --muted: #46666F;
+  --water: #1F6F7A;
+  --water-deep: #0D2B36;
+  --signal: #F2C230;
+  --on-signal: #0D2B36;
+  --line: #BFD3D0;
+
+  /* Colour (same in both themes) */
+  --foam: #F6FBFA;
+  --abyss: #071820;
+  --on-water: #E6F2F0;
+  --on-water-muted: #9CC4C9;
+  --tide-fill: #1F6F7A;
+  --live: #2FB36D;
+
+  /* Shape and motion */
+  --radius-md: 24px;
+  --radius-lg: 28px;
+  --radius-xl: 32px;
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+
+  color-scheme: light;
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Dark theme. The two blocks below must stay identical: the first follows the
+   visitor's system setting, the second is the manual [data-theme] override. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0A1E26;
+    --surface: #102B35;
+    --ink: #E6F2F0;
+    --muted: #93B2B8;
+    --water: #2E9AA8;
+    --water-deep: #071820;
+    --line: #1F4350;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0A1E26;
+  --surface: #102B35;
+  --ink: #E6F2F0;
+  --muted: #93B2B8;
+  --water: #2E9AA8;
+  --water-deep: #071820;
+  --line: #1F4350;
+  color-scheme: dark;
+}
+
+/* 2. Base ------------------------------------------------------------------ */
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Bricolage Grotesque", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 18px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+
+h2 {
+  font-size: clamp(30px, 4.5vw, 52px);
+  line-height: 1.02;
+  letter-spacing: -.03em;
+  font-weight: 800;
+  max-width: 16ch;
+  margin: 0 0 40px;
+}
+
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+.section { padding-top: 96px; }
+
+/* 3. Shared parts: header, buttons, footer --------------------------------- */
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0;
+  animation: fade .8s both;
+}
+.logo { font-weight: 800; font-size: 22px; letter-spacing: -.02em; text-decoration: none; }
+
+.site-nav { display: flex; align-items: center; gap: 24px; }
+.site-nav__link { color: var(--muted); font-weight: 600; font-size: 16px; text-decoration: none; }
+.site-nav__link:hover { color: var(--ink); }
+
+.btn {
+  display: inline-block;
+  background: var(--signal);
+  color: var(--on-signal);
+  font-weight: 800;
+  font-size: 17px;
+  text-decoration: none;
+  padding: 14px 24px;
+  border-radius: 999px;
+  transition: transform .2s;
+}
+.btn:hover { transform: translateY(-2px); filter: brightness(.95); }
+.btn--ghost {
+  background: transparent;
+  color: var(--ink);
+  box-shadow: inset 0 0 0 2px var(--ink);
+  margin-left: 8px;
+}
+
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 48px 0 40px;
+  color: var(--muted);
+  font-size: 15px;
+}
+
+/* 4. Hero ------------------------------------------------------------------ */
+.hero { padding: 40px 0 24px; }
+.hero__top {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 40px;
+  align-items: center;
+}
+.hero__text > * { animation: rise .9s var(--ease-out) both; }
+.hero__text > :nth-child(2) { animation-delay: .12s; }
+.hero__text > :nth-child(3) { animation-delay: .24s; }
+
+.hero__title {
+  font-size: clamp(44px, 6.4vw, 88px);
+  line-height: .95;
+  letter-spacing: -.04em;
+  font-weight: 800;
+  margin: 0 0 24px;
+}
+.hero__lead {
+  font-size: clamp(18px, 2.2vw, 22px);
+  color: var(--muted);
+  max-width: 46ch;
+  margin: 0 0 32px;
+}
+
+.hero__image {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  animation: wipe 1.2s .2s var(--ease-out) both;
+}
+.hero__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 60% 50%;
+  animation: zoom-out 12s .2s ease-out both;
+}
+.badge {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: var(--foam);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+.badge__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--live); animation: pulse 1.6s infinite; }
+
+/* Tide chart card */
+.tide {
+  margin-top: 48px;
+  padding: 28px 28px 20px;
+  border-radius: var(--radius-lg);
+  background: var(--water-deep);
+  color: var(--on-water);
+  overflow: hidden;
+  animation: rise 1s .5s var(--ease-out) both;
+}
+.tide__readout { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 40px; margin-bottom: 8px; }
+.tide__height { font-size: clamp(40px, 6vw, 64px); line-height: 1; letter-spacing: -.03em; font-weight: 800; }
+.tide__meta { color: var(--on-water-muted); font-size: 16px; }
+.tide__chart { display: block; width: 100%; height: auto; margin: 0 -2px; }
+.tide__area { fill: var(--tide-fill); opacity: .55; }
+.tide__line {
+  fill: none;
+  stroke: var(--signal);
+  stroke-width: 3;
+  stroke-dasharray: 1400;   /* longer than the path, so the draw-in animation covers it all */
+  stroke-dashoffset: 1400;
+  animation: draw 1.8s .2s ease-out forwards;
+}
+.tide__cursor { stroke: var(--foam); stroke-width: 1.5; stroke-dasharray: 4 5; }
+.tide__dot { fill: var(--signal); stroke: var(--abyss); stroke-width: 3; }
+.tide__slider { width: 100%; height: 32px; margin: 12px 0 4px; accent-color: var(--signal); }
+.tide__hint { margin: 0; font-size: 14px; color: var(--on-water-muted); }
+
+/* 5. Sections -------------------------------------------------------------- */
+
+/* Features */
+.feature-grid { display: grid; grid-template-columns: 1.4fr 1fr; grid-template-rows: auto auto; gap: 20px; }
+.card { padding: 32px; border-radius: var(--radius-md); background: var(--surface); }
+.card h3 { font-size: 26px; line-height: 1.1; letter-spacing: -.02em; font-weight: 800; margin: 0 0 12px; }
+.card p { margin: 0; color: var(--muted); }
+.card--featured {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 340px;
+  background: var(--water);
+  color: #fff;
+}
+.card--featured h3 { font-size: clamp(30px, 4vw, 44px); }
+.card--featured p { max-width: 34ch; color: #D4EEF0; }
+.stat { font-size: clamp(64px, 10vw, 120px); line-height: .9; letter-spacing: -.05em; font-weight: 800; }
+
+/* Fleet gallery: three portrait cards, the middle one dropped for rhythm */
+.fleet { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; align-items: start; }
+.fleet__item {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+.fleet__item:nth-child(2) { margin-top: 56px; }
+.fleet__item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--ease-out);
+}
+.fleet__item:hover img { transform: scale(1.06); }
+.fleet__item--kayak img,
+.fleet__item--canoe img { object-position: 62% 50%; }
+.fleet__item figcaption {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 56px 20px 18px;
+  color: #fff;
+  font-size: 15px;
+  line-height: 1.35;
+  background: linear-gradient(transparent, rgb(7 24 32 / .8));
+}
+.fleet__item strong { display: block; font-size: 21px; letter-spacing: -.01em; }
+
+/* Banner with parallax image (moved by script.js) and animated wave edge */
+.banner {
+  position: relative;
+  height: clamp(380px, 56vw, 540px);
+  margin: 96px 0 0;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--water-deep);
+}
+.banner::before {  /* darkens the left side so the text stays readable */
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgb(7 24 32 / .82), rgb(7 24 32 / .05) 75%);
+}
+.banner img {
+  position: absolute;
+  left: 0;
+  top: -12%;
+  width: 100%;
+  height: 124%;   /* extra height gives the parallax room to move */
+  object-fit: cover;
+}
+.banner__text {
+  position: absolute;
+  z-index: 2;
+  left: clamp(24px, 5vw, 56px);
+  top: 50%;
+  transform: translateY(-50%);
+  max-width: 30ch;
+}
+.banner h2 { font-size: clamp(28px, 4vw, 46px); color: #fff; margin: 0 0 16px; }
+.banner p { margin: 0; font-size: 18px; color: #D4E6EA; }
+.wave {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  bottom: -1px;
+  width: 200%;   /* twice the banner, so drifting by 50% loops seamlessly */
+  height: 32px;
+  animation: drift 9s linear infinite;
+}
+
+/* Testimonial */
+.quote {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  margin: 0;
+  padding: 48px 0 0;
+  border-top: 2px solid var(--line);
+}
+.quote p { margin: 0; font-size: clamp(24px, 3.4vw, 38px); line-height: 1.15; letter-spacing: -.02em; font-weight: 600; }
+.quote cite { font-style: normal; font-size: 16px; color: var(--muted); }
+
+/* Closing call to action */
+.cta {
+  margin-top: 96px;
+  padding: clamp(32px, 6vw, 72px);
+  border-radius: var(--radius-xl);
+  background: var(--signal);
+  color: var(--on-signal);
+}
+.cta h2 { margin-bottom: 24px; }
+.cta .btn { background: var(--on-signal); color: var(--foam); }
+
+/* 6. Motion ---------------------------------------------------------------- */
+
+/* Scroll reveal. The "js" class is added by script.js, so content is never
+   hidden if scripting fails. */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity .8s var(--d, 0s), transform .8s var(--d, 0s) var(--ease-out);
+}
+.js [data-reveal].is-visible { opacity: 1; transform: none; }
+.feature-grid .card:nth-child(2), .fleet__item:nth-child(2) { --d: .12s; }
+.feature-grid .card:nth-child(3), .fleet__item:nth-child(3) { --d: .24s; }
+
+@keyframes rise     { from { opacity: 0; transform: translateY(32px); } }
+@keyframes fade     { from { opacity: 0; } }
+@keyframes wipe     { from { clip-path: inset(0 0 100% 0 round 28px); } to { clip-path: inset(0 0 0 0 round 28px); } }
+@keyframes zoom-out { from { transform: scale(1.15); } }
+@keyframes draw     { to { stroke-dashoffset: 0; } }
+@keyframes drift    { to { transform: translateX(-50%); } }
+@keyframes pulse    { from { box-shadow: 0 0 0 0 rgb(47 179 109 / .6); } to { box-shadow: 0 0 0 10px rgb(47 179 109 / 0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .tide__line { stroke-dashoffset: 0; }  /* show the full curve without the draw-in */
+}
+
+/* 7. Responsive ------------------------------------------------------------ */
+@media (max-width: 720px) {
+  .site-nav__link { display: none; }
+  .section { padding-top: 72px; }
+  .hero__top, .feature-grid, .fleet, .quote { grid-template-columns: 1fr; }
+  .hero__image { aspect-ratio: 4 / 3; }
+  .btn--ghost { margin: 12px 0 0; }
+  .card--featured { grid-row: auto; }
+  .fleet__item { aspect-ratio: 4 / 3; }
+  .fleet__item:nth-child(2) { margin-top: 0; }
+  .banner { height: 420px; margin-top: 72px; }
+}
